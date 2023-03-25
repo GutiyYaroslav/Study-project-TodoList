@@ -1,6 +1,7 @@
 package com.example.studytodolist.dto;
 
 import com.example.studytodolist.validators.user.email.ValidEmail;
+import com.example.studytodolist.validators.user.password.ValidPassword;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -16,7 +17,6 @@ public class UserDTO {
     @ValidEmail
     private String email;
 
-    @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password must be at least 6 characters")
+    @ValidPassword
     private String password;
 }
