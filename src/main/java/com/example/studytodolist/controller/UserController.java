@@ -60,14 +60,17 @@ public class UserController {
 
 //      Attempt to find a user by id from the request parameter and update their information.
 
-        for(User userIter : userList){
-            if(userIter.getId().equals(userId)){
-                userIter.setFirstName(userDTO.getFirstName());
-                userIter.setLastName(userDTO.getLastName());
-                userIter.setEmail(userDTO.getEmail());
-                userIter.setPassword(userDTO.getPassword());
-                return new ResponseEntity(userIter, HttpStatus.OK);
-            }
+        Optional<User> userToUpdate = userList.stream()
+                .filter(u -> u.getId().equals(userId))
+                .findFirst();
+
+        if (userToUpdate.isPresent()) {
+            User userIter = userToUpdate.get();
+            userIter.setFirstName(userDTO.getFirstName());
+            userIter.setLastName(userDTO.getLastName());
+            userIter.setEmail(userDTO.getEmail());
+            userIter.setPassword(userDTO.getPassword());
+            return new ResponseEntity(userIter, HttpStatus.OK);
         }
 
 //      Handling the case when there is no user with the given id from the request parameter.
@@ -76,16 +79,6 @@ public class UserController {
                 List.of(new ValidationError("request parameter", "User with id " + userId + " does not exist."))),
                 HttpStatus.NOT_FOUND);
 
-
-//        return new ResponseEntity(new ValidationErrorResponse("invalid request parameter",
-//                new ArrayList<>(Collections
-//                        .singletonList(new ValidationError("request parameter",
-//                                "User with id " + userId + " does not exist.")))),
-//                HttpStatus.NOT_FOUND);
-
-//        return new ResponseEntity(new ValidationErrorResponse("invalid request parameter",
-//                        List.of(new ValidationError("request parameter", "User with id " + userId + " does not exist."))),
-//                        HttpStatus.NOT_FOUND);
     }
 
     @GetMapping
