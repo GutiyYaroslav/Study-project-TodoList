@@ -1,5 +1,6 @@
 package com.example.studytodolist.dto;
 
+import com.example.studytodolist.validators.user.email.ValidEmail;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -12,8 +13,7 @@ public class UserDTO {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email is not valid")
+    @ValidEmail
     private String email;
 
     @NotBlank(message = "Password is required")

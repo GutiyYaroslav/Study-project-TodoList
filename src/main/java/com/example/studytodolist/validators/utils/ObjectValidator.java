@@ -1,11 +1,9 @@
-package com.example.studytodolist.validators;
+package com.example.studytodolist.validators.utils;
 
-import com.example.studytodolist.dto.UserDTO;
 import jakarta.validation.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 

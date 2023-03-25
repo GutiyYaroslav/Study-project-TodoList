@@ -1,4 +1,6 @@
-package com.example.studytodolist.validators;
+package com.example.studytodolist.validators.utils;
+
+import com.example.studytodolist.validators.utils.ValidationError;
 
 import java.util.List;
 

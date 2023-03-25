@@ -2,10 +2,10 @@ package com.example.studytodolist.controller;
 
 import com.example.studytodolist.dto.UserDTO;
 import com.example.studytodolist.model.User;
-import com.example.studytodolist.validators.MessageBuilder;
-import com.example.studytodolist.validators.ObjectValidator;
-import com.example.studytodolist.validators.ValidationError;
-import com.example.studytodolist.validators.ValidationErrorResponse;
+import com.example.studytodolist.validators.utils.MessageBuilder;
+import com.example.studytodolist.validators.utils.ObjectValidator;
+import com.example.studytodolist.validators.utils.ValidationError;
+import com.example.studytodolist.validators.utils.ValidationErrorResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +18,19 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final ObjectValidator validator;
+    private final ObjectValidator<UserDTO> validator;
 
     // Database simulation
     private List<User> userList = new ArrayList<>();
 
     @PostMapping
-    public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity register(@RequestBody UserDTO userDTO) {
 
 //      Validation of DTO object and handling the case when the request object fails validation.
 
-        if(validator.validate(userDTO) != null){
-            return new ResponseEntity<>(validator.validate(userDTO), HttpStatus.BAD_REQUEST);
+        var violations = validator.validate(userDTO);
+        if(violations != null){
+            return new ResponseEntity(violations, HttpStatus.BAD_REQUEST);
         }
 
 //      Simulating the creation of a User object based on a DTO object
@@ -44,16 +45,17 @@ public class UserController {
                 .build();
         userList.add(createdUser);
 
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        return new ResponseEntity(createdUser, HttpStatus.CREATED);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<?> editUser(@RequestBody UserDTO userDTO, @PathVariable("userId") Long userId){
+    public ResponseEntity editUser(@RequestBody UserDTO userDTO, @PathVariable("userId") Long userId){
 
 //      Validation of DTO object and handling the case when the request object fails validation.
 
-        if(validator.validate(userDTO) != null){
-            return new ResponseEntity<>(validator.validate(userDTO), HttpStatus.BAD_REQUEST);
+        var violations = validator.validate(userDTO);
+        if(violations != null){
+            return new ResponseEntity(violations, HttpStatus.BAD_REQUEST);
         }
 
 //      Attempt to find a user by id from the request parameter and update their information.
@@ -64,13 +66,13 @@ public class UserController {
                 userIter.setLastName(userDTO.getLastName());
                 userIter.setEmail(userDTO.getEmail());
                 userIter.setPassword(userDTO.getPassword());
-                return new ResponseEntity<>(userIter, HttpStatus.OK);
+                return new ResponseEntity(userIter, HttpStatus.OK);
             }
         }
 
 //      Handling the case when there is no user with the given id from the request parameter.
 
-        return new ResponseEntity<>(new ValidationErrorResponse("invalid request parameter",
+        return new ResponseEntity(new ValidationErrorResponse("invalid request parameter",
                 new ArrayList<>(Collections
                         .singletonList(new ValidationError("request parameter",
                                 "User with id " + userId + " does not exist.")))),
@@ -78,20 +80,20 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllUsers(){
+    public ResponseEntity getAllUsers(){
 
 //      Handling the case when the list of users is empty.
 
         if(userList.isEmpty()){
-            return new ResponseEntity<>(new MessageBuilder("There are currently no created users."), HttpStatus.OK);
+            return new ResponseEntity(new MessageBuilder("There are currently no created users."), HttpStatus.OK);
         }
 //      Return all users
 
-        return new ResponseEntity<>(userList, HttpStatus.OK);
+        return new ResponseEntity(userList, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getUserById(@PathVariable("userId") Long userId){
+    public ResponseEntity getUserById(@PathVariable("userId") Long userId){
 
 //      Attempt to find a user by id from the request parameter and return user
 
@@ -100,12 +102,12 @@ public class UserController {
                 .findFirst();
 
         if(userFromOptional.isPresent()){
-            return new ResponseEntity<>(userFromOptional.get(), HttpStatus.OK);
+            return new ResponseEntity(userFromOptional.get(), HttpStatus.OK);
         }else{
 
 //      Handling the case when there is no user with the given id from the request parameter.
 
-            return new ResponseEntity<>(new ValidationErrorResponse("invalid request parameter",
+            return new ResponseEntity(new ValidationErrorResponse("invalid request parameter",
                     new ArrayList<>(Collections
                             .singletonList(new ValidationError("request parameter",
                                     "User with id " + userId + " does not exist.")))),
@@ -115,7 +117,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteUser(@PathVariable("userId") Long userId){
+    public ResponseEntity deleteUser(@PathVariable("userId") Long userId){
 
 //      Attempt to find a user by id from the request parameter and delete user
 
@@ -124,14 +126,14 @@ public class UserController {
             User user = iterator.next();
             if (user.getId().equals(userId)) {
                 iterator.remove();
-                return new ResponseEntity<>(new MessageBuilder("User with id - " +userId+ " has been deleted."),
+                return new ResponseEntity(new MessageBuilder("User with id - " +userId+ " has been deleted."),
                         HttpStatus.NO_CONTENT);
             }
         }
 
 //      Handling the case when there is no user with the given id from the request parameter.
 
-        return new ResponseEntity<>(new ValidationErrorResponse("invalid request parameter",
+        return new ResponseEntity(new ValidationErrorResponse("invalid request parameter",
                 new ArrayList<>(Collections
                         .singletonList(new ValidationError("request parameter",
                                 "User with id " + userId + " does not exist.")))),

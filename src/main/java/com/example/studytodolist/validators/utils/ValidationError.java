@@ -1,4 +1,4 @@
-package com.example.studytodolist.validators;
+package com.example.studytodolist.validators.utils;
 
 public class ValidationError {
 
