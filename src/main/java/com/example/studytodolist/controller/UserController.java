@@ -73,10 +73,19 @@ public class UserController {
 //      Handling the case when there is no user with the given id from the request parameter.
 
         return new ResponseEntity(new ValidationErrorResponse("invalid request parameter",
-                new ArrayList<>(Collections
-                        .singletonList(new ValidationError("request parameter",
-                                "User with id " + userId + " does not exist.")))),
+                List.of(new ValidationError("request parameter", "User with id " + userId + " does not exist."))),
                 HttpStatus.NOT_FOUND);
+
+
+//        return new ResponseEntity(new ValidationErrorResponse("invalid request parameter",
+//                new ArrayList<>(Collections
+//                        .singletonList(new ValidationError("request parameter",
+//                                "User with id " + userId + " does not exist.")))),
+//                HttpStatus.NOT_FOUND);
+
+//        return new ResponseEntity(new ValidationErrorResponse("invalid request parameter",
+//                        List.of(new ValidationError("request parameter", "User with id " + userId + " does not exist."))),
+//                        HttpStatus.NOT_FOUND);
     }
 
     @GetMapping
@@ -108,9 +117,7 @@ public class UserController {
 //      Handling the case when there is no user with the given id from the request parameter.
 
             return new ResponseEntity(new ValidationErrorResponse("invalid request parameter",
-                    new ArrayList<>(Collections
-                            .singletonList(new ValidationError("request parameter",
-                                    "User with id " + userId + " does not exist.")))),
+                    List.of(new ValidationError("request parameter", "User with id " + userId + " does not exist."))),
                     HttpStatus.NOT_FOUND);
         }
 
@@ -134,9 +141,7 @@ public class UserController {
 //      Handling the case when there is no user with the given id from the request parameter.
 
         return new ResponseEntity(new ValidationErrorResponse("invalid request parameter",
-                new ArrayList<>(Collections
-                        .singletonList(new ValidationError("request parameter",
-                                "User with id " + userId + " does not exist.")))),
+                List.of(new ValidationError("request parameter", "User with id " + userId + " does not exist."))),
                 HttpStatus.NOT_FOUND);
 
     }
