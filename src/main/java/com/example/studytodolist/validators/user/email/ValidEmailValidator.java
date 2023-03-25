@@ -1,5 +1,6 @@
 package com.example.studytodolist.validators.user.email;
 
+import com.example.studytodolist.validators.user.email.ValidEmail;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
