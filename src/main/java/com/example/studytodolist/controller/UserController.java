@@ -2,7 +2,8 @@ package com.example.studytodolist.controller;
 
 import com.example.studytodolist.dto.UserDTO;
 import com.example.studytodolist.model.User;
-import com.example.studytodolist.validators.utils.MessageBuilder;
+import com.example.studytodolist.utils.helper.MessageBuilder;
+import com.example.studytodolist.utils.helper.StringHelper;
 import com.example.studytodolist.validators.utils.ObjectValidator;
 import com.example.studytodolist.validators.utils.ValidationError;
 import com.example.studytodolist.validators.utils.ValidationErrorResponse;

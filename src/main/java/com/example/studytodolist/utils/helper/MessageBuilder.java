@@ -1,4 +1,4 @@
-package com.example.studytodolist.validators.utils;
+package com.example.studytodolist.utils.helper;
 
 import lombok.Data;
 
