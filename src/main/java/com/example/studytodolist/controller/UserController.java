@@ -7,6 +7,7 @@ import com.example.studytodolist.utils.helper.StringHelper;
 import com.example.studytodolist.validators.utils.ObjectValidator;
 import com.example.studytodolist.validators.utils.ValidationError;
 import com.example.studytodolist.validators.utils.ValidationErrorResponse;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+@Data
 public class UserController {
 
     private final ObjectValidator<UserDTO> validator;
@@ -139,7 +141,5 @@ public class UserController {
                 HttpStatus.NOT_FOUND);
 
     }
-
-
 }
 

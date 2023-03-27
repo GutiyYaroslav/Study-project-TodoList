@@ -1,10 +1,10 @@
 package com.example.studytodolist.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -23,6 +23,10 @@ public class User {
 
 
     private String password;
+
+
+    @JsonIgnore
+    private List<Task> tasks;
 
     public static Long createId(){
         return ++customId;
