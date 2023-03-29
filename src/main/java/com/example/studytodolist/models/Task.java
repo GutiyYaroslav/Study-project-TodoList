@@ -1,4 +1,4 @@
-package com.example.studytodolist.model;
+package com.example.studytodolist.models;
 
 import lombok.Builder;
 import lombok.Data;

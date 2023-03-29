@@ -1,4 +1,4 @@
-package com.example.studytodolist.utils.helper;
+package com.example.studytodolist.utils;
 
 import lombok.Data;
 

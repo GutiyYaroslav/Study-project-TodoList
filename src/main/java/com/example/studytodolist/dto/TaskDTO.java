@@ -1,18 +1,17 @@
 package com.example.studytodolist.dto;
 
-import com.example.studytodolist.model.User;
+import com.example.studytodolist.models.User;
+import com.example.studytodolist.validators.task.ValidTaskName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
 
 public class TaskDTO {
-
-    private Long id;
-
+    @ValidTaskName
     private String taskName;
 
-    private boolean completed;
-
+    @JsonIgnore
     private User user;
 
 }

@@ -1,13 +1,15 @@
-package com.example.studytodolist.model;
+package com.example.studytodolist.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @Builder
+
 public class User {
     private static Long customId = 0L;
 
